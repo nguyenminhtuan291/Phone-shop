@@ -1,16 +1,43 @@
-$(".js-open").on("click", function () {
-  var target = $(this).attr("data-target");
-  $(target).toggleClass("is-visible");
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip();
 });
 
-$(".js-close").on("click", function () {
-  $(this).parent().removeClass("is-visible");
+// Initialize popover component
+$(function () {
+  $('[data-toggle="popover"]').popover();
 });
 
 // function getProduct() {
 //   //copy y chang ben quan tri
 //   // the cho renderTable = renderData(response.data)
 // }
+function getProducts(searchValue) {
+  axios({
+    method: "GET",
+    url: "https://63f09efb5703e063fa490da7.mockapi.io/api/Products",
+    params: {
+      name: searchValue || undefined,
+    },
+  })
+    //hoặc viết tắt là apiGetProducts() do ta đã khai báo bên services
+    .then((response) => {
+      // Call API thành công
+      const products = response.data.map((product) => {
+        return new Product(
+          product.id,
+          product.name,
+          product.price,
+          product.img,
+          product.description
+        );
+      });
+      renderProducts(response.data);
+    })
+    .catch((error) => {
+      // Call API thất bại
+      alert("API get products error");
+    });
+}
 
 // function renderData(list) {
 //   let html = list.reduce((output, item) => {
