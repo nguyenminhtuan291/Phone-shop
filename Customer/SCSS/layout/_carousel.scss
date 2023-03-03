@@ -158,6 +158,13 @@
   display: block;
 }
 
+.text__content{
+  .shopping{
+      background-color: transparent;
+      border : 1px solid transparent;
+      padding-bottom : 14px}}
+      
+
 
 @include reponsive("md"){
   .carousel {
